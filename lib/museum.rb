@@ -11,15 +11,6 @@ class Museum
     @exhibits << exhi
   end
 
-  # def recommend_exhibits(patron)
-  #   patron.interests.map do |int|
-  #     int.map
-  #     @exhibits.select do |ex|
-  #       int == ex.name
-  #     end
-  #   end
-  #   @exhibits
-  # end
 
   def recommend_exhibits(patron)
     patron.interests.map do |int|
@@ -34,9 +25,17 @@ class Museum
 
   def admit(patron)
     @patrons << patron
+
+    # recommend_exhibits(patron).map do |exhibit|
+    #   if exhibit.cost < patron.spending_money
+    #     patron.spending_money -= exhibit.cost
+    #   end
+    # end
   end
 
   def patrons_by_exhibit_interest
+    #if I have time I would like to refactor this,
+    #I think it might be possible to use the recommend_exhibits method
     hash_1 = {}
     @exhibits.each do |exhi|
       hash_1[exhi] = []
@@ -50,6 +49,5 @@ class Museum
     end
     hash_1
   end
-
 
 end
