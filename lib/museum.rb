@@ -1,9 +1,10 @@
 class Museum
-  attr_reader :name, :exhibits
+  attr_reader :name, :exhibits, :patrons
 
-  def initialize(name, exhibits = [])
+  def initialize(name, exhibits = [], patrons = [])
     @name = name
     @exhibits = exhibits
+    @patrons = patrons
   end
 
   def add_exhibit(exhi)
@@ -29,7 +30,25 @@ class Museum
        int == ex.name
       end
     end.flatten
-    # @exhibits
+  end
+
+  def admit(patron)
+    @patrons << patron
+  end
+
+  def patrons_by_exhibit_interest
+    hash_1 = {}
+    @exhibits.each do |exhi|
+      hash_1[exhi] = []
+    end
+    @patrons.each do |patron|
+      hash_1.each do |k, v|
+        if patron.interests.include?(k.name)
+          v << patron
+        end
+      end
+    end
+    hash_1
   end
 
 

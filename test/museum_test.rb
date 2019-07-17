@@ -20,7 +20,7 @@ class MuseumTest < Minitest::Test
     @bob.add_interest("Dead Sea Scrolls")
     @bob.add_interest("Gems and Minerals")
     @sally = Patron.new("Sally", 20)
-    @sally.add_interest("IMAX")
+    @sally.add_interest("Dead Sea Scrolls")
   end
 
   def test_it_exists
@@ -43,6 +43,21 @@ class MuseumTest < Minitest::Test
     # binding.pry
 
     assert_equal [@dead_sea_scrolls, @gems_and_minerals], @dmns.recommend_exhibits(@bob)
-    assert_equal [@imax], @dmns.recommend_exhibits(@sally)
+    assert_equal [@dead_sea_scrolls], @dmns.recommend_exhibits(@sally)
+  end
+
+  def test_can_admit
+    @dmns.admit(@bob)
+    @dmns.admit(@sally)
+    assert_equal [@bob, @sally], @dmns.patrons
+  end
+
+  def test_patrons_by_exhibit_interest
+    @dmns.admit(@bob)
+    @dmns.admit(@sally)
+
+    # binding.pry
+    expected = {@gems_and_minerals => [@bob], @dead_sea_scrolls => [@bob, @sally], @imax => []}
+    assert_equal expected, @dmns.patrons_by_exhibit_interest
   end
 end
